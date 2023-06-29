@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+	<title>Job Portal - Applications</title>
+    <link rel="shortcut icon" href="{% static 'media/favicon.ico' %}">
+	<link rel="stylesheet" href="{%  static 'css/myjob.css' %}">
+</head>
+<body>
+<img src="{%  static 'media/logo.png' %}" class="logo">
+<div class="navbar">
+    <a href="{% url 'recruiter' %}">HOME</a>
+    <a href="{% url 'myjob' %}">MY JOBS</a>
+</div>
+<p class="head">Company: {{ job.company }}<br>
+Applications for Title: {{ job.title }}<br><br> </p>
+{% if applications %}
+    {% for application in applications %}
+        <div class="card">
+            <p> </p>
+            <p><b>&nbsp;Applicant:</b> {{ application.applicant_id.username }}</p>
+            <p><b>&nbsp;Name:</b> {{ application.full_name }}</p>
+            <p><b>&nbsp;Email:</b> {{ application.email }}</p>
+            <p><b>&nbsp;Why Hire?</b><br> &nbsp;{{ application.why }}</p>
+            <div class="pdf-container">
+                <p><b>View Resume: </b><a href="{{ application.resume.url }}" target="_blank">{{ application.full_name}}</a>
+             </div>
+            <hr>
+        </div>
+    {% empty %}
+        <p>No applications found for this job.</p>
+    {% endfor %}
+{% else %}
+    <p>No applications found for this job.</p>
+{% endif %}
+</body>
+</html>

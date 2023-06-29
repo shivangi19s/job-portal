@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+	<title>Job Portal - Job Openings</title>
+    <link rel="shortcut icon" href="{% static 'media/favicon.ico' %}">
+	<link rel="stylesheet" href="{%  static 'css/myjob.css' %}">
+</head>
+<body>
+<img src="{%  static 'media/logo.png' %}" class="logo">
+<div class="navbar">
+    <a href="applicant">HOME</a>
+</div>
+
+{% for job in jobs %}
+    <div class="card">
+        <br>
+        <p><b>&nbsp;Company:</b> {{job.company}}</p>
+        <p><b>&nbsp;Title:</b> {{job.title}}</p>
+        <p><b>&nbsp;Description:</b> {{job.description}}</p>
+        <p><b>&nbsp;Required Skills:</b> {{job.skills}}</p>
+        <p><b>&nbsp;Location:</b> {{job.location}}</p>
+        <br>
+        <button type="button" class="subbtn" style="cursor: pointer;" onclick="openApplyForm('{{ job.id }}')">APPLY</button>
+        <hr>
+    </div>
+    <div id="applyForm{{ job.id }}" class="apply-form" style="display: none;">
+        <div class="apply-content">
+        <span class="closeaj" onclick="closeApplyForm('{{ job.id }}')">&times;</span>
+        <h2>APPLY JOB</h2>
+        <hr/>
+        <form action="{% url 'apply_job' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <input type="hidden" name="job_id" value="{{ job.id }}">
+            <input type="text" placeholder="Full Name" name="full_name" required>
+            <input type="text" placeholder="Email" name="email" required>
+            <input type="text" placeholder="Why should we hire you?" name="why" required>
+            <br>
+            <label for="my-file" class="custom-file-input">Upload Resume</label>
+            <input type="file" id="my-file" class="file-input" accept=".pdf" name="resume">
+            <br>
+            <small style="font-size: 10px; color:gray">Please submit your resume in PDF format only.</small>
+            <br>
+            <br>
+            <button type="submit" class="cancelbtn" style="cursor: pointer;">APPLY</button>
+            <button type="button" class="cancelbtn" style="cursor: pointer;" onclick="location.href='{% url 'viewjob' %}'">CANCEL</button>
+        </form>
+        </div>
+    </div>
+{% empty %}
+    <p>No jobs posted.</p>
+{% endfor %}
+<br>
+<br>
+<div class="pagination">
+    <span class="step-links">
+        {% if jobs.has_previous %}
+            {% if jobs.number > 2 %}
+                <a href="?page=1">&laquo;</a>
+            {% endif %}
+            <a href="?page={{ jobs.previous_page_number }}">&larr;</a>
+        {% endif %}
+        <span class="current-page">{{ jobs.number }}</span>
+        {% if jobs.has_next %}
+            <a href="?page={{ jobs.next_page_number }}">&rarr;</a>
+            {% if jobs.number < last_page %}
+                <a href="?page={{ jobs.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        {% endif %}
+    </span>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+<script>
+     function openApplyForm(jobId) {
+        var applyForm = document.getElementById('applyForm' + jobId);
+        applyForm.style.display = 'block';
+    }
+    function closeApplyForm(jobId) {
+        var applyForm = document.getElementById('applyForm' + jobId);
+        applyForm.style.display = 'none';
+    }
+</script>
+</body>
+</html>

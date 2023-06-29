@@ -1,0 +1,177 @@
+.logo {
+  position: absolute;
+  top: 3%;
+  left: 1%;
+  width: 100px;
+  height: auto;
+  z-index: 1;
+}
+.navbar {
+  overflow: hidden;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.5), 0 20px 20px 0 rgba(0, 0, 0, 0.09);
+}
+
+.navbar a {
+  float: right;
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  padding: 30px 15px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: right;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 18px;
+  border: none;
+  outline: none;
+  color: #000;
+  padding: 30px 15px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  cursor: pointer;
+  background-color: #ddd;
+  color: black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.postjob{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top:100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.postjob-content{
+  background: #ffffff;
+  color: #000000;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+  border-radius: 25px;
+  width: 50%;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+input[type="text"] {
+  width: 60%;
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: 1px solid gray;
+  background: #ffffff;
+  text-align:center;
+  font-size: 18px;
+  border-radius: 15px;
+}
+
+input[type="text"]:focus {
+  font-size: 18px;
+  background-color: #ddd;
+  outline: none;
+}
+
+.cancelbtn,
+.subbtn{
+  padding: 14px 20px;
+  background-color: #ddd;
+  color: #000;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 15px;
+  width: 30%;
+}
+
+.subbtn,
+.cancelbtn: hover {
+  cursor: pointer;
+}
+
+hr {
+  border: 2px solid gray;
+  margin-bottom: 25px;
+}
+
+.closepj{
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closepj:hover,
+.closepj:focus{
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#con1_text {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Apercu, sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 8%;
+}
+
+#con1_head{
+  color: #000;
+  font-size: 52px;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  position: absolute;
+  top: 20%;
+  left: 8%;
+}
+
+.pic1 {
+  position: absolute;
+  top: 20%;
+  left: 55%;
+  width: 500px;
+  height: auto;
+}

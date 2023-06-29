@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+	<title>Job Portal - My Jobs</title>
+    <link rel="shortcut icon" href="{% static 'media/favicon.ico' %}">
+	<link rel="stylesheet" href="{%  static 'css/myjob.css' %}">
+</head>
+<body>
+<img src="{%  static 'media/logo.png' %}" class="logo">
+<div class="navbar">
+    <a href="{% url 'recruiter' %}">HOME</a>
+</div>
+
+{% for job in jobs %}
+    <div class="card">
+        <br>
+
+        <p><b>&nbsp;Company:</b> {{job.company}}</p>
+        <p><b>&nbsp;Title:</b> {{job.title}}</p>
+        <p><b>&nbsp;Description:</b> {{job.description}}</p>
+        <p><b>&nbsp;Required Skills:</b> {{job.skills}}</p>
+        <p><b>&nbsp;Location:</b> {{job.location}}</p>
+        <br>
+        <button type="button" class="subbtn" style="cursor: pointer;" onclick="openEditForm('{{ job.id }}')">EDIT</button>
+        <button type="button" class="subbtn" style="cursor: pointer;" onclick="confirmDelete('{{ job.id }}')">DELETE</button>
+        <br><br>
+        <button type="button" class="cancelbtn" style="cursor: pointer;" onclick="location.href='{% url 'application' job.id %}'">VIEW APPLICATIONS</button>
+        <hr>
+    </div>
+    <div id="editForm{{ job.id }}" class="edit-form" style="display: none;">
+        <div class="edit-content">
+        <span class="closeej" onclick="closeEditForm('{{ job.id }}')">&times;</span>
+        <h2>EDIT JOB DETAILS</h2>
+        <hr/>
+        <form action="{% url 'edit_job' job.id %}" method="POST">
+        {% csrf_token %}
+            <input type="text" name="company" value="{{job.company}}" required>
+            <input type="text" name="title" value="{{job.title}}" required>
+            <input type="text" name="description" value="{{job.description}}" required>
+            <input type="text" name="skills" value="{{job.skills}}" required>
+            <input type="text" name="location" value="{{job.location}}" required>
+            <br>
+            <button type="submit" class="subbtn" style="cursor: pointer;">DONE</button>
+            <button type="button" class="subbtn" style="cursor: pointer;" onclick="location.href='{% url 'myjob' %}'">CANCEL</button>
+        </form>
+        </div>
+    </div>
+{% empty %}
+    <p>No jobs posted.</p>
+{% endfor %}
+<br>
+<br>
+<div class="pagination">
+    <span class="step-links">
+        {% if jobs.has_previous %}
+            {% if jobs.number > 2 %}
+                <a href="?page=1">&laquo;</a>
+            {% endif %}
+            <a href="?page={{ jobs.previous_page_number }}">&larr;</a>
+        {% endif %}
+        <span class="current-page">{{ jobs.number }}</span>
+        {% if jobs.has_next %}
+            <a href="?page={{ jobs.next_page_number }}">&rarr;</a>
+            {% if jobs.number < last_page %}
+                <a href="?page={{ jobs.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        {% endif %}
+    </span>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<br>
+<br>
+<script>
+    function openEditForm(jobId) {
+        var editForm = document.getElementById('editForm' + jobId);
+        editForm.style.display = 'block';
+    }
+    function closeEditForm(jobId) {
+        var editForm = document.getElementById('editForm' + jobId);
+        editForm.style.display = 'none';
+    }
+    function confirmDelete(jobId) {
+        if (confirm("Are you sure you want to delete this job?")) {
+            window.location.href = "/delete_job/?job_id=" + jobId;
+        }
+    }
+</script>
+</body>
+</html>
+
